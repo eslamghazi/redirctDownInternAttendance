@@ -3,33 +3,271 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>جاري التحويل...</title>
+  <title>كيفية تثبيت التطبيق كتطبيق ويب (PWA)</title>
   <link rel="icon" href="./logo.png" type="image/png" />
-  <meta http-equiv="refresh" content="0;url=https://www.mediafire.com/file/i8jqt3qt7ac8svp/Nursing_KFSU_Intern_Attendance.apk/file">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       text-align: center;
-      padding: 50px;
+      padding: 0;
       background-color: #f4f4f4;
+      direction: rtl;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      padding: 30px 10px 0 10px;
+      box-sizing: border-box;
     }
     h1 {
       color: #333;
+      margin-bottom: 20px;
+      font-size: 2em;
+      animation: fadeIn 1s;
     }
-    a {
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 5px;
+      animation: popIn 0.7s;
+    }
+    .tab {
+      flex: 1 1 0;
+      padding: 12px 0;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 1.1em;
       color: #007bff;
-      text-decoration: none;
+      border-radius: 10px;
+      transition: background 0.3s, color 0.3s;
+      outline: none;
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
-    a:hover {
-      text-decoration: underline;
+    .tab.selected {
+      background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+      animation: tabSelect 0.4s;
+    }
+    @keyframes tabSelect {
+      from { background: #fff; color: #007bff; }
+      to { background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%); color: #fff; }
+    }
+    .instructions {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      padding: 24px 18px 18px 18px;
+      margin-bottom: 30px;
+      text-align: right;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.5s, transform 0.5s;
+      display: none;
+      animation: fadeInContent 0.7s;
+    }
+    .instructions.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @keyframes fadeInContent {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    ol {
+      padding-right: 20px;
+      font-size: 1.05em;
+      color: #444;
+      margin-bottom: 15px;
+    }
+    iframe {
+      width: 100%;
+      max-width: 400px;
+      height: 225px;
+      border: none;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      animation: fadeIn 1.2s;
+    }
+    .footer {
+      background-color: white;
+      color: black;
+      padding: 10px 20px;
+      box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+      margin: 40px auto 0 auto;
+      border-radius: 16px;
+      font-size: 15px;
+      position: relative;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      animation: fadeIn 1.2s;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      direction: ltr;
+    }
+    .footer .fa-earth-americas { color: #4267B2; }
+    .footer .fa-whatsapp { color: #25D366; }
+    .footer .fa-facebook-f { color: #4267B2; }
+    .footer a {
+      color: inherit;
+      font-size: 24px;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @media (max-width: 700px) {
+      .container, .footer {
+        max-width: 98vw;
+        padding: 10px;
+      }
+      iframe {
+        max-width: 98vw;
+      }
+    }
+    .apk-download-btn {
+      display: inline-block;
+      margin: 18px auto 0 auto;
+      padding: 12px 32px;
+      background: linear-gradient(90deg, #00c6ff 0%, #007bff 100%);
+      color: #fff;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
+      width: -webkit-fill-available;
+      text-align: center;
+      animation: popIn 0.7s;
+    }
+    .apk-download-btn:hover {
+      background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+      transform: translateY(-2px) scale(1.04);
+    }
+    .separator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 24px 0 10px 0;
+      width: 100%;
+    }
+    .separator span {
+      background: #f4f4f4;
+      color: #888;
+      padding: 0 18px;
+      font-size: 1.1em;
+      font-weight: 500;
+      border-radius: 20px;
+      z-index: 1;
+    }
+    .separator:before, .separator:after {
+      content: '';
+      flex: 1;
+      height: 1.5px;
+      background: #e0e0e0;
+      margin: 0 8px;
+      border-radius: 2px;
     }
   </style>
 </head>
 <body>
-  <h1>جاري تحويلك إلى صفحة التحميل...</h1>
-  <p>إذا لم يتم تحويلك تلقائيًا، <a href="https://www.mediafire.com/file/i8jqt3qt7ac8svp/Nursing_KFSU_Intern_Attendance.apk/file">اضغط هنا لتحميل التطبيق</a>.</p>
+  <div class="container">
+    <h1>كيفية تثبيت التطبيق كتطبيق ويب (PWA)</h1>
+    <div class="tabs">
+      <button class="tab selected" id="androidTab" onclick="showTab('android')"><i class="fab fa-android"></i> أندرويد</button>
+      <button class="tab" id="iosTab" onclick="showTab('ios')"><i class="fab fa-apple"></i> آيفون</button>
+    </div>
+    <div class="instructions active" id="androidInstructions">
+      <h2>تثبيت التطبيق على أجهزة أندرويد</h2>
+      <ol>
+        <li>افتح متصفح Google Chrome على جهازك.</li>
+        <li>ادخل إلى موقع التطبيق.</li>
+        <li>اضغط على النقاط الثلاث في أعلى يمين الشاشة.</li>
+        <li>اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".</li>
+        <li>اتبع التعليمات لإكمال التثبيت.</li>
+      </ol>
+      <iframe src="https://drive.google.com/file/d/1qyMMUlBkVquWkXZ27uByEfybOQ9YohM6/preview" allow="autoplay" allowfullscreen title="تثبيت PWA على أندرويد"></iframe>
+      <div class="separator"><span>أو</span></div>
+        <a href="https://www.mediafire.com/file/i8jqt3qt7ac8svp/Nursing_KFSU_Intern_Attendance.apk/file" target="_blank" class="apk-download-btn">تحميل تطبيق الأندرويد (APK)</a>
+    </div>
+    <div class="instructions" id="iosInstructions">
+      <h2>تثبيت التطبيق على أجهزة آيفون (iOS)</h2>
+      <ol>
+        <li>افتح متصفح Safari على جهازك.</li>
+        <li>ادخل إلى موقع التطبيق.</li>
+        <li>اضغط على زر المشاركة <span style="font-size:1.2em;">&#x1f517;</span> في أسفل الشاشة.</li>
+        <li>اختر "إضافة إلى الشاشة الرئيسية".</li>
+        <li>اضغط "إضافة" في الزاوية العليا لإكمال التثبيت.</li>
+      </ol>
+      <iframe src="https://drive.google.com/file/d/1fzRs564fBlMo4y7HVkQN5dHSyQ-JAnno/preview" allow="autoplay" allowfullscreen title="تثبيت PWA على iOS"></iframe>
+    </div>
+    <p style="margin-top: 20px; color: #888;">إذا واجهت أي مشكلة، يرجى التواصل مع الدعم الفني.</p>
+  </div>
+  <footer class="footer">
+    <div class="footer-content">
+      <div style="white-space: nowrap; font-size: 14px; color: #555;">
+        &copy; wafaa-Tech 2025 - <span id="currentYear"></span>
+      </div>
+      <div style="display: flex; gap: 15px;">
+        <a href="https://wafaatech.com/home" target="_blank" aria-label="Website"><i class="fas fa-earth-americas"></i></a>
+        <a href="https://wa.me/+201094928851" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/eslam.ghazi.7" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </footer>
   <script>
-    window.location.href = "https://www.mediafire.com/file/i8jqt3qt7ac8svp/Nursing_KFSU_Intern_Attendance.apk/file";
+    // Tab switching logic
+    function showTab(tab) {
+      document.getElementById('androidTab').classList.remove('selected');
+      document.getElementById('iosTab').classList.remove('selected');
+      document.getElementById('androidInstructions').classList.remove('active');
+      document.getElementById('iosInstructions').classList.remove('active');
+      if(tab === 'android') {
+        document.getElementById('androidTab').classList.add('selected');
+        document.getElementById('androidInstructions').classList.add('active');
+      } else {
+        document.getElementById('iosTab').classList.add('selected');
+        document.getElementById('iosInstructions').classList.add('active');
+      }
+    }
+    // Set current year dynamically
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
